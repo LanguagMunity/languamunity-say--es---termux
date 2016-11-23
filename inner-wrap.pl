@@ -1,12 +1,23 @@
 use strict;
 use argola;
 
-exit(0);
-my @argos = ();
-while ( &argola::yet() )
-{
-  @argos = (@argos,&argola::getrg());
-}
+my @cmsrc;
 
-exec("languamunity","say--es",@argos);
+@cmsrc = ("termux-tts-speak","-l","es");
+
+# The gender options don't really work on this platform
+# so we will just skip that option.
+&argola::getrg();
+
+sub opto__tx_do {
+  my $lc_a;
+  $lc_a = ' ' . &argola::getrg();
+  system(@cmsrc,$lc_a);
+} &argola::setopt('-tx',\&opto__tx_do);
+
+
+&argola::runopts();
+
+
+
 
